@@ -1,0 +1,61 @@
+.subteam-divisions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 56px;
+}
+
+.subteam-division-label,
+.subteam-row dt {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.7;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.subteam-division-label {
+  margin: 0 0 20px;
+  color: #D70015;
+}
+
+.subteam-division-label.non-technical-teams {
+  color: #86868B;
+}
+
+.subteam-list {
+  margin: 0;
+}
+
+.subteam-row {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  gap: 25px;
+  border-top: 1px solid #E5E5EA;
+  padding: 24px 18px 24px 0;
+}
+
+.subteam-row dt {
+  color: #1D1D1F;
+}
+
+.subteam-row dd {
+  margin: 0;
+  color: #6E6E73;
+  font-size: 16px;
+  line-height: 1.625;
+}
+
+@media (max-width: 1050px) {
+  .subteam-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+}
+
+@media (max-width: 750px) {
+  .subteam-divisions {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+}

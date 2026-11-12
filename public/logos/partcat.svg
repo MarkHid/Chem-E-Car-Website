@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 112">
+  <!-- Placeholder wordmark; replace with an official logo when available. -->
+  <g stroke="#238C9D" stroke-width="2" fill="#238C9D">
+    <path d="M85 23l15-9 15 9-15 9z" fill="none"/>
+    <circle cx="85" cy="23" r="3"/>
+    <circle cx="100" cy="14" r="3"/>
+    <circle cx="115" cy="23" r="3"/>
+    <circle cx="100" cy="32" r="3"/>
+  </g>
+  <text x="100" y="75" fill="#196B7B" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="39" font-weight="700" letter-spacing="-2">PartCat</text>
+</svg>

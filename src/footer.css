@@ -1,0 +1,152 @@
+.footer {
+  margin-top: 110px;
+  border-top: 1px solid #E5E5EA;
+  background: linear-gradient(180deg, #F5F5F7 0%, #EDEDF0 100%);
+  color: #1D1D1F;
+}
+
+.footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 64px 24px;
+}
+
+.footer-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 64px;
+}
+
+.footer-branding {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  background: transparent;
+}
+
+.footer-club-logo,
+.footer-university-logo {
+  display: block;
+  flex: 0 0 auto;
+  width: auto;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.footer-club-logo {
+  height: 96px;
+  transition: transform 200ms ease;
+}
+
+.footer-club-logo:hover {
+  transform: scale(1.05);
+}
+
+.footer-logo-divider {
+  flex: 0 0 1px;
+  height: 48px;
+  margin: 0 24px;
+  background: #D2D2D7;
+}
+
+.footer-university-logo {
+  height: 64px;
+}
+
+.footer-explore h2 {
+  margin: 0 0 24px;
+  color: #1D1D1F;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.5;
+}
+
+.footer-nav-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.footer-nav-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.footer-nav-column a {
+  color: #48484A;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  transition: color 200ms ease, transform 200ms ease;
+}
+
+.footer-nav-column a:is(:hover, :focus-visible) {
+  color: var(--accent-red);
+  transform: translateX(4px);
+}
+
+.footer-credit-strip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px 32px;
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid #E5E5EA;
+  color: #86868B;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.footer-credit-strip p {
+  margin: 0;
+}
+
+@media (min-width: 1024px) {
+  .footer-inner {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+}
+
+@media (max-width: 750px) {
+  .footer {
+    margin-top: 65px;
+  }
+
+  .footer-main {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+
+  .footer-credit-strip {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 400px) {
+  .footer-club-logo {
+    height: 80px;
+  }
+
+  .footer-logo-divider {
+    margin: 0 16px;
+  }
+
+  .footer-university-logo {
+    height: 56px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-club-logo:hover,
+  .footer-nav-column a:is(:hover, :focus-visible) {
+    transform: none;
+  }
+}

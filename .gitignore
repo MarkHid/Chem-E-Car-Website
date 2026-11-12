@@ -1,0 +1,13 @@
+# Dependencies and generated build output
+node_modules/
+dist/
+.vite/
+
+# Local environment and machine-specific files
+.env
+.env.*
+!.env.example
+*.local
+npm-debug.log*
+.DS_Store
+Thumbs.db

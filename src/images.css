@@ -1,0 +1,160 @@
+.image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+  min-height: 0;
+  padding: 20px;
+  border: 1px dashed #D2D2D7;
+  background: linear-gradient(135deg, #F5F5F7 0%, #EDEDF0 100%);
+  color: #86868B;
+  text-align: center;
+  transform: none !important;
+}
+
+.image-placeholder-title {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  line-height: 1.5;
+}
+
+.image-placeholder-label {
+  max-width: 200px;
+  font-size: 10px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.hero .hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 48%;
+}
+
+.hero .hero-media.image-placeholder {
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 28px 40px;
+  border: 0;
+}
+
+.hero-media.image-placeholder .image-placeholder-label {
+  display: none;
+}
+
+.hero-wireframe {
+  color: #1D1D1F;
+  background: #F5F5F7;
+}
+
+.hero-wireframe .hero-shade {
+  display: none;
+}
+
+.hero-wireframe .hero-center p {
+  color: #6E6E73;
+}
+
+.hero-wireframe .hero-action {
+  border-color: #D2D2D7;
+}
+
+/* Keep navigation readable when a hero is empty or its local file fails. */
+.site-header:has(+ main .hero-wireframe) {
+  color: #1D1D1F;
+}
+
+.site-header:has(+ main .hero-wireframe) :is(.nav-links a, .nav-join, .mobile-menu) {
+  color: #1D1D1F;
+}
+
+.site-header:has(+ main .hero-wireframe) .brand-glyph i {
+  background: currentColor;
+}
+
+.site-header:has(+ main .hero-wireframe) .nav-join {
+  border-color: #D2D2D7;
+}
+
+.site-header:has(+ main .hero-wireframe) .nav-links-open {
+  background: rgba(245, 245, 247, 0.98);
+  border-color: #D2D2D7;
+}
+
+.partner-logo .image-placeholder {
+  width: 100%;
+  height: 100%;
+  max-width: 180px;
+  max-height: 126px;
+  padding: 12px;
+}
+
+.partner-logo .image-placeholder-label {
+  display: none;
+}
+
+.footer-branding .image-placeholder {
+  width: 124px;
+  padding: 8px;
+  mix-blend-mode: normal;
+}
+
+.footer-branding .image-placeholder-label {
+  display: none;
+}
+
+@media (max-width: 750px) {
+  .hero .hero-media.image-placeholder {
+    padding: 28px 22px;
+  }
+}
+
+@media (max-width: 400px) {
+  .footer-branding .image-placeholder {
+    width: 100px;
+  }
+}
+
+/* Portrait framing stays independent of the frosted member details. */
+.member { border-radius: 12px; }
+.member-photo { border-radius: 12px; }
+.member-photo .member-portrait {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  transform-origin: top center;
+  transition: transform 500ms ease-out;
+}
+.member:hover .member-portrait { transform: scale(1.03); }
+.member-placeholder {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 20px;
+  border: 1px dashed #D2D2D7;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #F5F5F7, #EDEDF0);
+  color: #86868B;
+  text-align: center;
+}
+.member-placeholder span { font: 10px/1.6 monospace; overflow-wrap: anywhere; }
+.member-footer { position: relative; background: rgba(255,255,255,.65); backdrop-filter: blur(20px); }
+.member-footer .member-social { top: 12px; opacity: 1; }
+.member-footer:has(.member-social) { padding-right: 54px; }
+@media (prefers-reduced-motion: reduce) {
+  .member-photo .member-portrait { transition: none; }
+  .member:hover .member-portrait { transform: none; }
+}

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 112">
+  <!-- Placeholder wordmark; replace with an official logo when available. -->
+  <rect x="73" y="6" width="54" height="6" rx="3" fill="#F5C400"/>
+  <g fill="#171717" text-anchor="middle" font-family="Arial, Helvetica, sans-serif">
+    <text x="100" y="63" font-size="43" font-weight="700" letter-spacing="-2">UNSW</text>
+    <text x="100" y="89" font-size="14" letter-spacing="5">SYDNEY</text>
+  </g>
+</svg>
