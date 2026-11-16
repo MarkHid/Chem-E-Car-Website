@@ -10,7 +10,7 @@ function Portrait({ member }) {
     </div>;
   }
   return <img src={member.image} alt={`Portrait of ${member.name}, ${member.role}`}
-    className="member-portrait w-full h-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+    className="member-portrait w-full h-full object-cover object-top"
     loading="lazy" onError={() => setFailed(true)} />;
 }
 

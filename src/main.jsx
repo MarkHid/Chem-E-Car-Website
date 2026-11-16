@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
@@ -37,24 +37,33 @@ function FadeIn({children,delay=0,className=''}) {const reduce=useReducedMotion(
 
 function Navbar() {
   const [open, setOpen] = useState(false);
+  const menuButtonRef = useRef(null);
   const { pathname } = useLocation();
+  const joinTeamHref = '/contact#recruitment';
 
   useEffect(() => setOpen(false), [pathname]);
+
+  useEffect(() => {
+    if (!open) return;
+    const closeOnEscape = event => {
+      if (event.key === 'Escape') {
+        setOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+    document.addEventListener('keydown', closeOnEscape);
+    return () => document.removeEventListener('keydown', closeOnEscape);
+  }, [open]);
 
   return (
     <header className="site-header">
       <div className="nav-inner">
-        <Link to="/" className="brand" aria-label="Chem-E-Car UNSW home">
+        <Link to="/" className="brand" aria-label="Chem-E-Car UNSW home" onClick={() => setOpen(false)}>
           <AssetImage
             src={CLUB_ASSETS.logos.club_transparent}
             alt=""
             kind="logo"
-            style={{
-              display: 'block',
-              height: 80,
-              width: 'auto',
-              objectFit: 'contain',
-            }}
+            className="brand-logo"
           />
           <span>
             CHEM-E-CAR <small>UNSW</small>
@@ -71,17 +80,22 @@ function Navbar() {
               to={href}
               key={href}
               aria-current={pathname === href ? 'page' : undefined}
+              onClick={() => setOpen(false)}
             >
               {name}
             </Link>
           ))}
+          <Link to={joinTeamHref} className="nav-join-mobile" onClick={() => setOpen(false)}>
+            Join the Team <ArrowUpRight size={14} aria-hidden="true" />
+          </Link>
         </nav>
 
-        <Link to="/contact#recruitment" className="nav-join">
+        <Link to={joinTeamHref} className="nav-join">
           JOIN THE TEAM <ArrowUpRight size={14} />
         </Link>
 
         <button
+          ref={menuButtonRef}
           type="button"
           className="mobile-menu"
           aria-label={open ? 'Close menu' : 'Open menu'}
@@ -97,11 +111,11 @@ function Navbar() {
 }
 
 const heroContent = {
-  '/': {image:CLUB_ASSETS.heroes.home,kicker:'CHEM-E-CAR UNSW',title:<>Small car.<br/>Big engineering.</>,tag:'Student engineering. Real-world constraints.',action:'Discover what we build',href:'#build'},
-  '/about': {image:CLUB_ASSETS.heroes.about,kicker:'ABOUT THE TEAM',title:<>Curiosity, built<br/>into motion.</>,tag:'A student-led space for chemistry, design and engineering.',action:'Our approach',href:'#mission'},
-  '/team': {image:CLUB_ASSETS.heroes.team,kicker:'THE PEOPLE',title:<>Built by<br/>the team.</>,tag:'Different disciplines. One moving project.',action:'Meet the team',href:'#people'},
-  '/partners': {image:CLUB_ASSETS.heroes.partners,kicker:'PARTNERSHIPS',title:<>Engineering works<br/>better together.</>,tag:'Supporting hands-on student engineering at UNSW.',action:'Explore partnerships',href:'#support'},
-  '/contact': {image:CLUB_ASSETS.heroes.contact,kicker:'GET IN TOUCH',title:<>Good things start<br/>with a conversation.</>,tag:'For students, schools, industry and collaborators.',action:'Contact the team',href:'#contact-details'}
+  '/': {image:CLUB_ASSETS.heroes.home,kicker:'CHEM-E-CAR UNSW',title:<>	Built by Students.<br/>Powered by Chemistry.</>,tag:'Student engineering. Real-world constraints.',action:'Discover what we build',href:'#build'},
+  '/about': {image:CLUB_ASSETS.heroes.about,kicker:'ABOUT THE TEAM',title:<>Who We Are.<br/></>,tag:'Discover Chem-E-Car UNSW, our purpose, and how we bring engineering beyond the classroom.',action:'Our approach',href:'#mission'},
+  '/team': {image:CLUB_ASSETS.heroes.team,kicker:'THE PEOPLE',title:<>Our Team.<br/></>,tag:'Different disciplines. One moving project.',action:'Meet the team',href:'#people'},
+  '/partners': {image:CLUB_ASSETS.heroes.partners,kicker:'PARTNERSHIPS',title:<>Our Partners.<br/></>,tag:'	Meet the organisations supporting our team and helping bring our projects to life.',action:'Explore partnerships',href:'#support'},
+  '/contact': {image:CLUB_ASSETS.heroes.contact,kicker:'GET IN TOUCH',title:<>Get in Touch<br/></>,tag:'Have a question, partnership opportunity, or interest in joining? We\'d love to hear from you.',action:'Contact the team',href:'#contact-details'}
 };
 function Hero({path}) {
   const item = heroContent[path] || heroContent['/'];
@@ -132,14 +146,50 @@ function Hero({path}) {
     </section>
   );
 }
-function GlassFeature({image,label,title,description,action,href='#',large=false}) {
-  return <article className={'glass glass-feature '+(large?'feature-large':'')}><div className="feature-image-wrap"><Photo src={image} alt={title}/></div><div className="feature-copy"><Label>{label}</Label><h3>{title}</h3><p>{description}</p><a className="text-link" href={href}>{action} <ArrowUpRight size={16}/></a></div></article>
+function GlassFeature({image,label,title,description}) {
+  return (
+    <article className="glass glass-feature">
+      <div className="feature-image-wrap"><Photo src={image} alt={title}/></div>
+      <div className="feature-copy">
+        <Label>{label}</Label>
+        <h3>{title}</h3>
+        <p>{description}</p>
+      </div>
+    </article>
+  );
 }
-function Home() {return <><Hero path="/"/><div className="content-wrap" id="build"><section className="section-space"><FadeIn><Headline label="WHAT WE BUILD" title="From reaction to reality." body="A chemical reaction is the starting point. Everything after that takes design, testing and collaboration."/></FadeIn><div className="features-two"><FadeIn delay={.12}><GlassFeature image={CLUB_ASSETS.showcase.vehicle} label="THE VEHICLE" title="Engineering a car with chemistry." description="An experimental vehicle combining a chemical power source, electrical systems, a stopping mechanism and precision mechanical design." action="How the project works" href="/about"/></FadeIn><FadeIn delay={.18}><GlassFeature image={CLUB_ASSETS.showcase.chemistry} label="THE PROCESS" title="Test. Adjust. Test again." description="From battery characterisation to data collection, our lab work turns ideas into repeatable engineering decisions." action="Meet the builders" href="/team"/></FadeIn></div></section>
-  <section className="section-space outreach-section" id="events"><div className="section-heading-row"><Headline label="BEYOND THE WORKSHOP" title="Engineering, out in the open." body="We want more people to experience what engineering looks like when you can actually see it move."/><span className="quiet-caption">EVENT GALLERY</span></div><div className="events-grid"><FadeIn className="event-event" delay={.08}><EventCard image={CLUB_ASSETS.outreach.stemWorkshop} title="High school STEM outreach" text="Demonstrations and conversations that connect classroom science with hands-on engineering." category="STEM OUTREACH"/></FadeIn><FadeIn className="event-event" delay={.14}><EventCard image={CLUB_ASSETS.outreach.campusExhibition} title="O-Week & exhibitions" text="Meet the team, see the project and find out how to get involved." category="CAMPUS"/></FadeIn><FadeIn className="event-event" delay={.2}><EventCard image={CLUB_ASSETS.outreach.competitionDay} title="Competition & industry showcase" text="A chance to present our engineering work, learn from others and represent UNSW." category="COMPETITION"/></FadeIn></div></section>
+function Home() {return <><Hero path="/"/><div className="content-wrap" id="build">
+  <section className="section-space">
+    <FadeIn>
+      <Headline
+        label="WHAT WE BUILD"
+        title="Our Chem-E-Car Project."
+        body="Our team designs, builds, and tests a small car powered by chemical reactions. The project combines chemistry, electronics, mechanical design, and practical engineering."
+      />
+    </FadeIn>
+    <div className="features-two">
+      <FadeIn delay={.12}>
+        <GlassFeature
+          image={CLUB_ASSETS.showcase.vehicle}
+          label="THE VEHICLE"
+          title="Our Chemical-Powered Car."
+          description="Our vehicle combines a chemical power source, electrical circuits, mechanical components, and a stopping mechanism. Each system is designed to work together to move the car and stop it at a target distance."
+        />
+      </FadeIn>
+      <FadeIn delay={.18}>
+        <GlassFeature
+          image={CLUB_ASSETS.showcase.chemistry}
+          label="DESIGN & TESTING"
+          title="Our Engineering Process."
+          description="Our team develops and tests each part of the vehicle through regular laboratory sessions. We collect data, evaluate performance, and refine our designs to improve reliability and consistency."
+        />
+      </FadeIn>
+    </div>
+  </section>
+  <section className="section-space outreach-section" id="events"><div className="section-heading-row"><Headline label="BEYOND THE WORKSHOP" title="Engineering, out in the open." body="We want more people to experience what engineering looks like when you can actually see it move."/><span className="quiet-caption">EVENT GALLERY</span></div><div className="events-grid"><FadeIn className="event-event" delay={.08}><EventCard image={CLUB_ASSETS.outreach.stemWorkshop} title="High School STEM Outreach" text="Through school visits and hands-on demonstrations, we introduce students to Chem-E-Car and create opportunities for anyone interested in exploring engineering, regardless of their experience." category="STEM OUTREACH"/></FadeIn><FadeIn className="event-event" delay={.14}><EventCard image={CLUB_ASSETS.outreach.campusExhibition} title="Campus Events" text="Beyond building our car, we bring students together through campus events, exhibitions, and social activities, creating opportunities to connect, make friends, and grow our team." category="CAMPUS"/></FadeIn><FadeIn className="event-event" delay={.2}><EventCard image={CLUB_ASSETS.outreach.competitionDay} title="Competition" text="We compete in AIChE Chem-E-Car competitions, representing UNSW against university teams from around the world. Through these international competitions, we aim to build a competitive chemical-powered car, improve our engineering skills, and challenge ourselves to achieve the best possible results." category="COMPETITION"/></FadeIn></div></section>
   <section className="section-space"><div className="statement glass"><Label>STUDENT-LED ENGINEERING</Label><h2>There is no better way to learn engineering than to build something that has to work.</h2><Link to="/about" className="text-link">More about our team <ArrowUpRight size={16}/></Link></div></section></div></>}
 function EventCard({image,title,text,category}) {return <article className="glass event-card"><div className="event-image"><Photo src={image} alt={title}/></div><div className="event-copy"><Label>{category}</Label><h3>{title}</h3><p>{text}</p></div></article>}
-function About() {return <><Hero path="/about"/><div className="content-wrap"><section className="section-space about-editorial" id="mission"><div className="about-copy"><Headline label="OUR MISSION" title="Learn by making. Grow by collaborating."/><p>Chem-E-Car UNSW is a student-led engineering team that designs and builds a small vehicle powered by chemical reactions. The challenge brings chemistry, electronics, mechanical design and practical testing into one shared project.</p><p>Our work is shaped by the engineering process: make a hypothesis, build a prototype, measure what happens, and improve it. We bring together students who want to put classroom ideas to the test.</p><Link to="/team" className="text-link">The people behind the project <ArrowUpRight size={16}/></Link></div><div className="masonry"><div className="masonry-col"><Photo src={CLUB_ASSETS.about.labHands} alt="Chem-E-Car team working on the car at competition"/><Photo src={CLUB_ASSETS.about.collaboration} alt="Chem-E-Car executive team together at UNSW"/></div><div className="masonry-col offset"><Photo src={CLUB_ASSETS.about.labCulture} alt="Chemistry laboratory"/><Photo src={CLUB_ASSETS.about.workshop} alt="Workshop and fabrication"/></div></div></section><section className="section-space"><FadeIn><Headline label="HOW WE WORK" title="Engineering is a team sport." body="Our technical and operational groups bring different skills to the same challenge."/></FadeIn><AboutSubTeams/></section><section className="section-space"><FadeIn><div className="glass outreach-wide"><div className="outreach-wide-copy"><Label>OUR COMMUNITY</Label><h2>Engineering becomes more meaningful when we share it.</h2><p>Through student engagement, school outreach and public demonstrations, we aim to make technical work approachable and give future engineers something tangible to explore.</p><Link to="/contact#contact-details" className="text-link">Get in touch about outreach <ArrowUpRight size={16}/></Link></div><div className="outreach-wide-images"><Photo src={CLUB_ASSETS.outreach.stemWorkshop} alt="Chem-E-Car students demonstrating a car at a STEM workshop"/><Photo src={CLUB_ASSETS.outreach.campusExhibition} alt="Campus exhibition"/></div></div></FadeIn></section></div></>}
+function About() {return <><Hero path="/about"/><div className="content-wrap"><section className="section-space about-editorial" id="mission"><div className="about-copy"><Headline label="OUR MISSION" title="Putting Engineering into Practice."/><p>Chem-E-Car UNSW is a student-led engineering team that designs and builds a small vehicle powered by chemical reactions. The challenge brings chemistry, electronics, mechanical design and practical testing into one shared project.</p><p>Our work is shaped by the engineering process: make a hypothesis, build a prototype, measure what happens, and improve it. We bring together students who want to put classroom ideas to the test.</p><Link to="/team" className="text-link">The people behind the project <ArrowUpRight size={16}/></Link></div><div className="masonry"><div className="masonry-col"><Photo src={CLUB_ASSETS.about.labHands} alt="Chem-E-Car team working on the car at competition"/><Photo src={CLUB_ASSETS.about.collaboration} alt="Chem-E-Car executive team together at UNSW"/></div><div className="masonry-col offset"><Photo src={CLUB_ASSETS.about.labCulture} alt="Chemistry laboratory"/><Photo src={CLUB_ASSETS.about.workshop} alt="Workshop and fabrication"/></div></div></section><section className="section-space"><FadeIn><Headline label="HOW WE WORK" title="Engineering is a team sport." body="Our technical and operational groups bring different skills to the same challenge."/></FadeIn><AboutSubTeams/></section><section className="section-space"><FadeIn><div className="glass outreach-wide"><div className="outreach-wide-copy"><Label>OUR COMMUNITY</Label><h2>Sharing Engineering with Our Community.</h2><p>Through student engagement, school outreach and public demonstrations, we aim to make technical work approachable and give future engineers something tangible to explore.</p><Link to="/contact#contact-details" className="text-link">Get in touch about outreach <ArrowUpRight size={16}/></Link></div><div className="outreach-wide-images"><Photo src={CLUB_ASSETS.outreach.stemWorkshop} alt="Chem-E-Car students demonstrating a car at a STEM workshop"/><Photo src={CLUB_ASSETS.outreach.campusExhibition} alt="Campus exhibition"/></div></div></FadeIn></section></div></>}
 const members = [
  {name :'Nathanael Winston Widjaya', role:'President',group:'Executive'},
  {name :'Paarth Singh Tomar', role:'Vice President',group:'Executive'},
@@ -262,7 +312,7 @@ function Footer() {
             <AssetImage
               kind="logo"
               className="footer-club-logo"
-              src={CLUB_ASSETS.logos.club}
+              src={CLUB_ASSETS.logos.club_transparent}
               alt="UNSW Chem-E-Car Logo"
               width="3300"
               height="2550"

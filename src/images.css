@@ -131,10 +131,7 @@
   height: 100%;
   object-fit: cover;
   object-position: top;
-  transform-origin: top center;
-  transition: transform 500ms ease-out;
 }
-.member:hover .member-portrait { transform: scale(1.03); }
 .member-placeholder {
   display: flex;
   width: 100%;
@@ -154,7 +151,3 @@
 .member-footer { position: relative; background: rgba(255,255,255,.65); backdrop-filter: blur(20px); }
 .member-footer .member-social { top: 12px; opacity: 1; }
 .member-footer:has(.member-social) { padding-right: 54px; }
-@media (prefers-reduced-motion: reduce) {
-  .member-photo .member-portrait { transition: none; }
-  .member:hover .member-portrait { transform: none; }
-}

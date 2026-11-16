@@ -9,9 +9,19 @@ export const partners = [
     logo: CLUB_ASSETS.logos.chemicalEngineering,
   },
   {
+    name: 'UNSW',
+    href: 'https://www.unsw.edu.au/',
+    logo: CLUB_ASSETS.logos.unsw,
+  },
+  {
     name: 'Arc @ UNSW',
     href: 'https://www.arc.unsw.edu.au/',
     logo: CLUB_ASSETS.logos.arc,
+  },
+  {
+    name: 'PartCat',
+    href: 'https://www.pcrg.unsw.edu.au/',
+    logo: CLUB_ASSETS.logos.partcat,
   },
   {
     name: 'NSW Government',

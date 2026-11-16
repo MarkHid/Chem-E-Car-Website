@@ -7,11 +7,11 @@ export const CLUB_ASSETS = {
   logos: {
     club_transparent: '/images/UNSW Chem-E-Car Transparent Logo.png',
     club: '/images/Chem-E-Car Logo.png',
-    unsw: '/images/unsw-logo.png',
-    chemicalEngineering: '/images/partners/UNSW Chem Eng.png',
-    arc: '/images/partners/arc.svg',
+    unsw: '/images/partners/UNSW logo.png',
+    chemicalEngineering: '/images/partners/UNSW ChemEng.jpg',
+    arc: '/images/partners/ARC UNSW logo.jpg',
     nswGovernment: '/images/partners/nsw-goverment.svg',
-    partcat: '/images/partners/partcat.svg',
+    partcat: '/images/partners/PartCat Logo.png',
   },
   heroes: {
     home: '/images/HomeHero (Edited).jpeg',
